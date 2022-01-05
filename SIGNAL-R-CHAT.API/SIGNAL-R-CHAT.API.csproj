@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>SIGNAL_R_CHAT.API</RootNamespace>
     <UserSecretsId>d2a37128-4da5-4189-b079-491863a98dd5</UserSecretsId>
+    <AssemblyName>`</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
@@ -28,5 +30,7 @@
     <ProjectReference Include="..\SIGNAL-R-CHAT.Domain\SIGNAL-R-CHAT.Domain.csproj" />
     <ProjectReference Include="..\SIGNAL-R-CHAT.Infrastructure\SIGNAL-R-CHAT.Infrastructure.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

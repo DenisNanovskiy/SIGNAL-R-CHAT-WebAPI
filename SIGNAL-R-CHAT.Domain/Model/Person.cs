@@ -10,14 +10,8 @@ namespace SIGNAL_R_CHAT.Domain
     {
         public Guid Id { get; set; }
 
-        public DateTime RegistrationTime { get; set; }
-
-        public string PersonStatus { get; set; }
-
         public string Name { get; set; }
 
-        public Guid WorkGroupId { get; set; }
-
-        public WorkGroup WorkGroup { get; set; }
+        public ICollection<WorkGroup> WorkGroups  { get; set; }
     }
 }

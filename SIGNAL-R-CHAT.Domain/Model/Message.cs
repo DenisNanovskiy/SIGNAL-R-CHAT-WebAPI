@@ -4,11 +4,12 @@ namespace SIGNAL_R_CHAT.Domain
 {
     public class Message
     {
-        public Guid MessageId { get; set; }
+        public Guid Id { get; set; }
         public string Text { get; set; }
         public DateTime DateTime { get; set; }
-        public string Status { get; set; }
-        public Addressee Addressee { get; set; }
+        public Person FromPerson{ get; set; }
+        public WorkGroup ToGroup { get; set; }
+        public Guid ToGroupId { get; set; }
     }
 }
-
+ 

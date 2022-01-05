@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SIGNAL_R_CHAT.Domain;
-   
-namespace SIGNAL_R_CHAT.Infrastructure.Data
+using System.Reflection;
+
+
+namespace SIGNAL_R_CHAT.Infrastructure
 {
     public class Context : DbContext 
     {
@@ -15,9 +17,16 @@ namespace SIGNAL_R_CHAT.Infrastructure.Data
         {
         }
         public DbSet<WorkGroup> WorkGroups { get; set; }
-        public DbSet<Addressee> Addressees { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Person> Persons { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
     }
+
 }

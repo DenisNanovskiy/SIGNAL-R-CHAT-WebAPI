@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SIGNAL_R_CHAT.API
 {
@@ -26,7 +27,8 @@ namespace SIGNAL_R_CHAT.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<Infrastructure.Context>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Signal-R-CHATConString")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -12,6 +12,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SIGNAL_R_CHAT.API.Hubs;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using SIGNAL_R_CHAT.Domain;
 
 namespace SIGNAL_R_CHAT.API
 {
@@ -29,7 +33,15 @@ namespace SIGNAL_R_CHAT.API
         {
             services.AddDbContext<Infrastructure.Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Signal-R-CHATConString")));
+
+            services.AddIdentity<Person, IdentityRole>()
+                .AddEntityFrameworkStores<Infrastructure.Context>();
+
+
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+            services.AddSignalR();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SIGNAL_R_CHAT.API", Version = "v1" });
@@ -50,11 +62,13 @@ namespace SIGNAL_R_CHAT.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

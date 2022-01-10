@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SIGNAL_R_CHAT.Domain;
 using SIGNAL_R_CHAT.API.ViewModels;
+using Microsoft.AspNetCore.Cors;
+
 
 namespace SIGNAL_R_CHAT.API.Controllers
 {
@@ -14,20 +16,19 @@ namespace SIGNAL_R_CHAT.API.Controllers
     [ApiController]
     public class RegistrController : ControllerBase
     {
-        private readonly SignInManager<Person> _signInManager;
         private readonly UserManager<Person> _userManager;
 
         public RegistrController(
-            UserManager<Person> userManager,
-            SignInManager<Person> signInManager)
+            UserManager<Person> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
+
+        [EnableCors("LocalPolicy")]
         [HttpPost]
         public async Task<ActionResult<Person>> RegistrPerson(RegistrVIewModel registView)
         {
-            Person person = new Person { Email = registView.Email, Name = registView.PersonName, UserName = registView.UserName };
+            Person person = new() { Email = registView.Email, Name = registView.PersonName, UserName = registView.UserName };
             IdentityResult result = await _userManager.CreateAsync(person, registView.Password);
 
             if (result.Succeeded)

@@ -1,0 +1,33 @@
+﻿@page "/Login"
+@using System.Net.Http
+@inject HttpClient Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+@using SIGNAL_R_CHAT.Domain
+
+<h3>Login page</h3>
+
+<input @bind="userName" placeholder="User Name" />
+
+<input @bind="password" placeholder="Password" />
+
+<button @onclick="Autharization"> Войти </button>
+
+
+@code {
+    private string userName;
+    private string password;
+
+
+
+    private async Task Autharization()
+    {
+        var person = new {
+            userName = userName,
+            password = password
+        };
+        userName = "";
+        password = "";
+        await Http.PostAsJsonAsync("https://localhost:44300/api/Login", person);
+    }
+}

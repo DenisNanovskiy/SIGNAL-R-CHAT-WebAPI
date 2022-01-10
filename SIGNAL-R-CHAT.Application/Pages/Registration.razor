@@ -1,0 +1,45 @@
+﻿@page "/Registration"
+@inject HttpClient Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+@using System.Net.Http
+
+
+<h3>Registration page</h3>
+
+<input @bind="userName" placeholder="User Name" />
+
+<input @bind="email" placeholder="Email" />
+
+<input @bind="fullName" placeholder="Full Name" />
+
+<input @bind="password" placeholder="Password" />
+
+<button @onclick="RegistrationPerson"> Регистрация </button>
+
+
+@code {
+    private string userName;
+    private string password;
+    private string fullName;
+    private string email;
+
+
+    private async Task RegistrationPerson()
+    {
+        var person = new
+        {
+
+            userName = userName,
+            password = password,
+            personName = fullName,
+            email = email,
+        };
+        userName = "";
+        password = "";
+        fullName = "";
+        email = "";
+        await Http.PostAsJsonAsync("https://localhost:44300/api/Registr", person);
+
+
+    } }

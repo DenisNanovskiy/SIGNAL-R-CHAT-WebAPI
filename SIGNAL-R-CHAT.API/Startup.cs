@@ -16,6 +16,7 @@ using SIGNAL_R_CHAT.API.Hubs;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using SIGNAL_R_CHAT.Domain;
+using Microsoft.AspNetCore.Http;
 
 namespace SIGNAL_R_CHAT.API
 {
@@ -38,9 +39,33 @@ namespace SIGNAL_R_CHAT.API
                 .AddEntityFrameworkStores<Infrastructure.Context>();
 
 
+            //add SameSite flag to identity cookies
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+            });
+
+            services.AddAntiforgery(opts => {
+                opts.Cookie.SameSite = SameSiteMode.Unspecified;
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("LocalPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44351")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials();
+           
+                    });
+            });
+
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             services.AddSignalR();
+
 
             services.AddSwaggerGen(c =>
             {
@@ -61,6 +86,8 @@ namespace SIGNAL_R_CHAT.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("LocalPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();

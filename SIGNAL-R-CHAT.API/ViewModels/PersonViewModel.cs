@@ -10,8 +10,6 @@ namespace SIGNAL_R_CHAT.API.ViewModels
         public string UserName { get; set; }
         public string PersonName { get; set; }
         public string CurrentWorkGroup { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
 
     }
 }
